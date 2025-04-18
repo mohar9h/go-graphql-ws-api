@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mohar9h/pecalets_backend/internal/routes"
+	"github.com/mohar9h/go-graphql-ws-api/internal/routes"
 )
 
 func SetupServer() *gin.Engine {

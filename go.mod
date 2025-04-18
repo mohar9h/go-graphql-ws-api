@@ -1,4 +1,4 @@
-module github.com/mohar9h/pecalets_backend
+module github.com/mohar9h/go-graphql-ws-api
 
 go 1.24.1
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/mohar9h/pecalets_backend/internal/config"
-	"github.com/mohar9h/pecalets_backend/internal/server"
+	"github.com/mohar9h/go-graphql-ws-api/internal/config"
+	"github.com/mohar9h/go-graphql-ws-api/internal/server"
 	"log"
 )
 
