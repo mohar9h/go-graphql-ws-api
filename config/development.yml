@@ -22,3 +22,6 @@ redis:
   minIdleConnections: 100
   poolSize: 5000
   poolTimeout: 240
+rateLimit:
+  requestsPerSecond: 5
+  burstSize: 2

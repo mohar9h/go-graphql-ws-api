@@ -2,17 +2,19 @@ package config
 
 import (
 	"errors"
-	"github.com/spf13/viper"
 	"log"
 	"os"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Server   ServerConfig
-	Postgres PostgresConfig
-	Redis    RedisConfig
-	Cors     CorsConfig
+	Server    ServerConfig
+	Postgres  PostgresConfig
+	Redis     RedisConfig
+	Cors      CorsConfig
+	RateLimit RateLimitConfig
 }
 
 type ServerConfig struct {
@@ -46,6 +48,11 @@ type LoggerConfig struct {
 	FilePath string
 	Encoding string
 	Level    string
+}
+
+type RateLimitConfig struct {
+	RequestsPerSecond int
+	BurstSize         int
 }
 
 func GetConfig() *Config {
@@ -94,10 +101,10 @@ func LoadConfig(filename string, fileType string) (*viper.Viper, error) {
 func getConfigPath(env string) string {
 	switch env {
 	case "docker":
-		return "./config/config-docker"
+		return "./config/docker"
 	case "production":
-		return "./config/config-production"
+		return "./config/production"
 	default:
-		return "./config/config-development"
+		return "./config/development"
 	}
 }
