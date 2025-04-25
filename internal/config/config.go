@@ -14,6 +14,7 @@ type Config struct {
 	Postgres  PostgresConfig
 	Redis     RedisConfig
 	Cors      CorsConfig
+	Logger    LoggerConfig
 	RateLimit RateLimitConfig
 }
 
