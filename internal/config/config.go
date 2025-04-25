@@ -21,6 +21,7 @@ type ServerConfig struct {
 	Port    string
 	RunMode string
 }
+
 type CorsConfig struct {
 	AllowOrigins string
 }
@@ -39,9 +40,12 @@ type RedisConfig struct {
 	Port               string
 	Password           string
 	Database           string
-	MinIdleConnections int
-	PoolSize           time.Duration
+	DialTimeout        time.Duration
+	ReadTimeout        time.Duration
+	WriteTimeout       time.Duration
+	PoolSize           int
 	PoolTimeout        time.Duration
+	IdleCheckFrequency time.Duration
 }
 
 type LoggerConfig struct {
