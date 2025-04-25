@@ -10,10 +10,13 @@ cors:
 postgres:
   host: localhost
   port: 5432
-  user: postgres
+  username: postgres
   password: Mohammad1367
   database: pecalets
-  sslMode: false
+  sslMode: disable
+  maxIdleConns: 15
+  maxOpenConns: 100
+  connMaxLifetime: 5
 redis:
   host: localhost
   port: 6379

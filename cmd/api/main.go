@@ -12,8 +12,17 @@ import (
 func main() {
 	cfg := config.GetConfig()
 
-	database.InitRedis()
+	err := database.InitRedis(cfg)
+	if err != nil {
+		log.Fatalf("failed to init redis: %v", err)
+	}
 	defer database.CloseRedis()
+
+	err = database.InitPostgres(cfg)
+	if err != nil {
+		log.Fatalf("failed to init postgres: %v", err)
+	}
+	defer database.CloseDB()
 
 	r := server.SetupServer()
 	address := fmt.Sprintf(":%s", cfg.Server.Port)

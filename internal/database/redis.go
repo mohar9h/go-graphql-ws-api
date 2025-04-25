@@ -1,7 +1,9 @@
 package database
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/mohar9h/go-graphql-ws-api/internal/config"
@@ -10,8 +12,7 @@ import (
 
 var redisClient *redis.Client
 
-func InitRedis() error {
-	cfg := config.GetConfig()
+func InitRedis(cfg *config.Config) error {
 
 	redisClient = redis.NewClient(&redis.Options{
 		Addr:            fmt.Sprintf("%s:%s", cfg.Redis.Host, cfg.Redis.Port),
@@ -23,6 +24,13 @@ func InitRedis() error {
 		PoolTimeout:     cfg.Redis.PoolTimeout * time.Second,
 		ConnMaxIdleTime: 30 * time.Second,
 	})
+
+	_, err := redisClient.Ping(context.Background()).Result()
+	if err != nil {
+		return err
+	}
+
+	log.Println("Connected to Redis")
 
 	return nil
 }
