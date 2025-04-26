@@ -13,6 +13,7 @@ import (
 func main() {
 	cfg := config.GetConfig()
 	logger := logging.NewZapLogger(cfg)
+
 	err := database.InitRedis(cfg)
 	if err != nil {
 		logger.Fatal(logging.Redis, logging.Startup, err.Error(), nil)
@@ -25,7 +26,7 @@ func main() {
 	}
 	defer database.CloseDB()
 
-	r := server.SetupServer()
+	r := server.SetupServer(cfg)
 	address := fmt.Sprintf(":%s", cfg.Server.Port)
 	if err := r.Run(address); err != nil {
 		log.Fatalf("failed to run server: %v", err)
