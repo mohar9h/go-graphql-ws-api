@@ -2,7 +2,6 @@ package logging
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/mohar9h/go-graphql-ws-api/internal/config"
@@ -38,7 +37,7 @@ func (l *zapLogger) getLevel() zapcore.Level {
 	return level
 }
 func (l *zapLogger) Init() {
-	fileName := fmt.Sprintf("%s%s-%s.%s", l.cfg.Logger.FilePath, time.Now().Format("2006-01-02"), strconv.FormatInt(time.Now().UnixNano(), 10), "log")
+	fileName := fmt.Sprintf("%s%s.%s", l.cfg.Logger.FilePath, time.Now().Format("2006-01-02"), "log")
 
 	writeSyncer := zapcore.AddSync(&lumberjack.Logger{
 		Filename:   fileName,

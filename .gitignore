@@ -5,4 +5,4 @@
 .env.test
 .env.production
 
-logs/
+storage/logs/
