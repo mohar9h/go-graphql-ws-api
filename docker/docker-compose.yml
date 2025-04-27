@@ -1,7 +1,5 @@
-version: '3.7'
-
 services:
- ####################### SETUP #######################
+  ####################### SETUP #######################
   setup:
     build:
       context: elk/setup/
@@ -22,7 +20,7 @@ services:
     depends_on:
       - elasticsearch
 
-  ####################### ELK #######################
+  ####################### ELASTICSEARCH #######################
   elasticsearch:
     build:
       context: elk/elasticsearch/
@@ -30,7 +28,6 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     container_name: elasticsearch
     volumes:
-      - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch:/usr/share/elasticsearch/data:Z
     ports:
       - 9200:9200
@@ -44,13 +41,13 @@ services:
       - webapi_network
     restart: unless-stopped
 
+  ####################### KIBANA #######################
   kibana:
     build:
       context: elk/kibana/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
       - elasticsearch:/usr/share/kibana/data:Z
     ports:
       - 5601:5601
@@ -62,6 +59,7 @@ services:
       - elasticsearch
     restart: unless-stopped
 
+  ####################### FILEBEAT #######################
   filebeat:
     build:
       context: elk/filebeat/
@@ -72,12 +70,8 @@ services:
       - -e
       - --strict.perms=false
     volumes:
-      - ./elk/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ../storage/logs:/var/log/filebeat/service:ro
-      #- ../prod/logs:/var/log/filebeat/service:ro
       - logs:/var/log/filebeat
       - logs:/app:ro
-
     environment:
       FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
       BEATS_SYSTEM_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
@@ -92,7 +86,7 @@ services:
     container_name: postgres_container
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
+      POSTGRES_PASSWORD: Mohammad1367
       POSTGRES_DB: pecalets
       POSTGRES_DATA: /data/postgres
     volumes:
@@ -115,10 +109,14 @@ services:
       - "6379:6379"
     networks:
       - webapi_network
-####################### VOLUME AND NETWORKS #######################
+
+####################### VOLUMES AND NETWORKS #######################
 volumes:
   postgres:
   redis:
+  logs:
+  elasticsearch:
+  setup:
 
 networks:
   webapi_network:
