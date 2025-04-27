@@ -19,6 +19,7 @@ const (
 	// General
 	Startup         SubCategory = "Startup"
 	ExternalService SubCategory = "ExternalService"
+	ConfigLoad      SubCategory = "ConfigLoad"
 
 	// Postgres
 	Migration SubCategory = "Migration"
