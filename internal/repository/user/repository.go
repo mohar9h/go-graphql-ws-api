@@ -78,7 +78,6 @@ func (r *repository) List(ctx context.Context, offset int, limit int) ([]*user.U
 	return user, int64(len(user)), nil
 }
 
-// Update implements user.Repository.
 func (r *repository) Update(ctx context.Context, user *user.User) error {
 	return r.db.WithContext(ctx).Save(user).Error
 }

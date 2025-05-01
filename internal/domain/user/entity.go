@@ -9,12 +9,13 @@ import (
 
 type User struct {
 	base.BaseModel
-	Username  string `json:"username" gorm:"uniqueIndex;null"`
-	Password  string `json:"password" gorm:"null"`
-	Email     string `json:"email" gorm:"uniqueIndex;null"`
-	Mobile    string `json:"mobile" gorm:"uniqueIndex;null"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	Username  string `json:"username" gorm:"uniqueIndex;size:20"`
+	Password  string `json:"password" gorm:"size:255"`
+	Email     string `json:"email" gorm:"uniqueIndex;size:100"`
+	Mobile    string `json:"mobile" gorm:"uniqueIndex;size:11"`
+	FirstName string `json:"first_name" gorm:"size:50"`
+	LastName  string `json:"last_name" gorm:"size:50"`
+	GroupID   *uint  `json:"group_id" gorm:"index"`
 }
 
 func (User) TableName() string {

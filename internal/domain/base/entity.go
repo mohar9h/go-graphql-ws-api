@@ -3,7 +3,7 @@ package base
 import "time"
 
 type BaseModel struct {
-	ID        int64     `json:"id" gorm:"primary_key;auto_increment"`
+	ID        uint      `json:"id" gorm:"primary_key;auto_increment"`
 	IsDeleted bool      `json:"is_deleted" gorm:"default:false"`
 	IsActive  bool      `json:"is_active" gorm:"default:true"`
 	CreatedBy string    `json:"created_by" gorm:"null"`
