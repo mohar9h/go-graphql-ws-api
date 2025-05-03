@@ -2,55 +2,28 @@ package migrations
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"path/filepath"
-	"strings"
-
 	"github.com/mohar9h/go-graphql-ws-api/internal/database"
+	"github.com/mohar9h/go-graphql-ws-api/internal/domain/group"
+	"github.com/mohar9h/go-graphql-ws-api/internal/domain/permission"
+	"github.com/mohar9h/go-graphql-ws-api/internal/domain/user"
+	"log"
 )
 
 func RunMigrations() {
-
 	db := database.GetDB()
-
-	tables, err := loadModels()
-	if err != nil {
-		log.Fatalf("Failed to load models: %v", err)
+	if db == nil {
+		log.Fatal("❌ DB not initialized. Did you call database.InitPostgres()?")
 	}
 
-	err = db.Migrator().CreateTable(tables...)
-	if err != nil {
-		fmt.Println(err)
-		return
+	models := []any{
+		&user.User{},
+		&group.Group{},
+		&permission.Permission{},
 	}
 
-	fmt.Println("Migrations completed successfully!")
-}
-
-func loadModels() ([]any, error) {
-	var models []any
-
-	// Get the current working directory
-	wd, err := os.Getwd()
-	if err != nil {
-		return nil, err
+	if err := db.AutoMigrate(models...); err != nil {
+		log.Fatalf("Migration failed: %v", err)
 	}
 
-	// Construct the path to the domain directory
-	domainPath := filepath.Join(wd, "internal", "domain")
-
-	err = filepath.Walk(domainPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-
-		if strings.HasSuffix(info.Name(), "entity.go") {
-			log.Printf("Found model file: %s", path)
-		}
-
-		return nil
-	})
-
-	return models, err
+	fmt.Println("✅ Migrations completed successfully!")
 }

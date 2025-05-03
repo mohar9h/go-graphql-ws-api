@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-
 	"github.com/mohar9h/go-graphql-ws-api/internal/config"
 	"github.com/mohar9h/go-graphql-ws-api/internal/database"
 	"github.com/mohar9h/go-graphql-ws-api/internal/server"
@@ -29,7 +27,6 @@ func main() {
 	r := server.SetupServer(cfg)
 	address := fmt.Sprintf(":%s", cfg.Server.Port)
 	if err := r.Run(address); err != nil {
-		log.Fatalf("failed to run server: %v", err)
 		logger.Fatal(logging.Internal, logging.Startup, err.Error(), nil)
 	}
 }
