@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"github.com/mohar9h/go-graphql-ws-api/internal/domain/group"
 
 	"github.com/mohar9h/go-graphql-ws-api/internal/domain/base"
 	"golang.org/x/crypto/bcrypt"
@@ -9,13 +10,14 @@ import (
 
 type User struct {
 	base.BaseModel
-	Username  string `json:"username" gorm:"uniqueIndex;size:20"`
-	Password  string `json:"password" gorm:"size:255"`
-	Email     string `json:"email" gorm:"uniqueIndex;size:100"`
-	Mobile    string `json:"mobile" gorm:"uniqueIndex;size:11"`
-	FirstName string `json:"first_name" gorm:"size:50"`
-	LastName  string `json:"last_name" gorm:"size:50"`
-	GroupID   *uint  `json:"group_id" gorm:"index"`
+	Username  string      `json:"username" gorm:"uniqueIndex;size:20"`
+	Password  string      `json:"password" gorm:"size:255"`
+	Email     string      `json:"email" gorm:"uniqueIndex;size:100"`
+	Mobile    string      `json:"mobile" gorm:"uniqueIndex;size:11"`
+	FirstName string      `json:"first_name" gorm:"size:50"`
+	LastName  string      `json:"last_name" gorm:"size:50"`
+	GroupId   int64       `json:"group_id" gorm:"index"`
+	Group     group.Group `json:"group" gorm:"foreignkey:GroupId"`
 }
 
 func (User) TableName() string {
